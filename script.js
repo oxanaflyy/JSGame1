@@ -2,31 +2,43 @@ var grantHealth = 10;
 var userHealth = 40;
 var userWin = 0;
 var grantWin = 0;
-var question = prompt("Do you want to play?");
+var Name;
 
-if (question === "Yes" || question === "yes") {
-  var name = prompt("What is your name?");
+startGame();
+
+function startGame(){
+  var playing = prompt("Do you want to play?");
+  if (playing.toLocaleLowerCase() === "yes"){
+    Name = prompt("What is your name?");
+    startCombat();
+  } else {
+    console.log("Try again");
+  }
 }
 
-while (userWin < 3 && grantWin !== 1) {
-  var userDamage = Math.floor(Math.random() * 2) + 1;
-  var grantDamage = Math.floor(Math.random() * 2) + 1;
-  if (userHealth >= 0 && grantHealth >= 0) {
-    userHealth -= userDamage;
-    grantHealth -= grantDamage;
-    console.log(name + " has " + userHealth + " health left.");
+function startCombat() {
+while (userWin <= 3 && grantWin !== 1) {
+  var attacking = prompt("Would you like to attack or quit?");
+  if (attacking.toLocaleLowerCase() === "attack") {
+    if (userHealth <= 0){
+      grantWin++;
+      console.log ("Grant has won!");
+    } else if (grantHealth >= 1 && userHealth >= 1) {
+    userHealth -= getDamage();
+    grantHealth -= getDamage();
+    console.log(Name + " has " + userHealth + " health left.");
     console.log("Grant has " + grantHealth + " health left.");
-  } else if (userHealth <= 0) {
-    grantWin++;
-    console.log("Grant has won!");
-  } else if (grantHealth <= 0) {
-    userWin++;
-    grantHealth = 10;
+  } else {
+    console.log("You have quit the game!");
+    break;
+  }}
   }
 }
 
 if (userWin === 3) {
-  console.log(name + " has won!");
-} else if(grantWin===1) {
-  console.log("Grant has won!");
+  console.log(Name + " has won!");
+} 
+
+function getDamage() {
+  return Math.floor(Math.random()*5 +1);
 }
